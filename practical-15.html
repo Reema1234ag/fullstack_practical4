@@ -5,83 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practical-15</title>
     <style>
-        h1{
+
+        * {
+            background-color:grey;
+            padding: 0;  
+            margin: 0;
+        }
+
+        p {
+            margin: 30px 5px;
+            color: white;
             text-align: center;
             font-size: 60px;
-            color: white;
+            
         }
-        body{
-            background-color: gray;
-            margin: 0;
-            padding: 0;
+        #increase, #decrease {
+            background-color: green;
+            font-size: 60px;
+            padding: 5px;
+            margin: 15px;
+            height: 150px;
+            width: 150px;
         }
-        #container{
-            margin: 60px 570px ;
+        #container {
+            justify-content: center;
+            flex-direction: row;
+            display: flex;
+            flex-wrap: wrap;
+          
         }
-        #btn1{
-            background-color: yellow;
-            margin-right: 38px;
-            width: 40px;
-            height: 40px;
-            font-size: 25px;
-        }
-        #btn2{
-            background-color: yellow;
-            /*margin-left: 80px;*/
-            display: inline;
-            width: 40px;
-            height: 40px;
-            font-weight: bold;
-            font-size: 25px;
-        }
-        #value{
-            background-color: blue;
-            display: inline;
-            padding-left: 20px;
-            padding-right: 50px;
-            /*margin-right: 28px;*/
-            background: none;
-            font-size: 30px;
-            font-weight: bold;
-            color: yellow;
-        }
+
     </style>
 </head>
 <body>
-    <h1>COUNTER</h1>
+    <p>Counter</p>
     <div id="container">
-    <button id="btn1">-</button>
-    <div id="value"></div>
-    <button id="btn2">+</button>
+        <button id="decrease">-</button>
+        <p id="counts">0</p>
+        <button id="increase">+</button>
     </div>
-    
     <script>
-        var a=0;
-        var button1 = document.getElementById("btn1");
-        var number = document.getElementById("value");
-        number.innerHTML=a;
-        var button2 = document.getElementById("btn2");
-        btn1.disabled=true;
-        button1.onclick = function () {
-            a = a- 1;
-            number.innerHTML = a;
-            if (a==0 ||a<0) {
-                button1.disabled = true;
+        var decrease = document.getElementById("decrease");
+        var increase = document.getElementById("increase");
+        counts = document.getElementById("counts");
+        var counter = 0;
+        updateCounter();
+        decrease.style.color = "white";
+        increase.style.color = "white";
+        function updateCounter() {
+            counts.innerHTML = counter;
+        }
+        
+        increase.addEventListener("click", () => {
+            counter++;
+            updateCounter();
+            increase.style.color = "black";
+            decrease.style.color = "white";
+        });
+        
+        decrease.addEventListener("click", () => {
+            if (counter <= 0) {
+                decrease.disable = true;
+            } else {
+                counter--;
+                decrease.disable = false;
             }
-            else{
-                button1.disabled=false;
-            }
-        };
-        button2.onclick = function () {
-            a = a+ 1;
-            number.innerHTML = a;
-            if (a==0 ||a<0) {
-                button1.disabled = true;
-            }
-            else{
-                 button1.disabled=false;
-            }
-        };
-    </script>
+            decrease.style.color = "black";
+            increase.style.color = "white";
+            updateCounter();
+        });
+        
+    
+    </script>    
 </body>
 </html>

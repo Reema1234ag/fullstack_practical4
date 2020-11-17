@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>practical-17</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            
+        }
+
+        body {
+            height: 100vh;
+            background-position: center;
+            background-size: cover;
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        #time {
+            font-size: 8rem;
+        }
+
+        h1, h2 {
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 3rem;
+            opacity: .5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <time id="time"></time>
+    <h1 id="greeting">Good Morning</h1>
+    <h2 id="name" contenteditable="true"></h2>
+    <h1 id="date">sat nov 14 2020</h1>
+    <script>
+        const time = document.getElementById("time");
+        const greeting = document.getElementById("greeting");
+        const name = document.getElementById("name");
+        const date = document.getElementById("date");
+        name.addEventListener("keypress", setName);
+        name.addEventListener("blur", setName);
+        function showtime() {
+        let today = new Date();
+        let hour = today.getHours();
+        let min = today.getMinutes();
+        let sec = today.getSeconds();
+        let todaydate = today.toDateString();
+
+        const amPm = hour > 12 ? " PM" : " AM";
+        hour = hour % 12 || 12;
+        time.innerHTML = `${addZero(hour)}<span>:<span/>${addZero(
+            min
+        )}<span>:<span/>${addZero(sec)}${amPm}`;
+
+        date.innerHTML = `${todaydate}`;
+
+        setTimeout(showtime, 1000);
+        }
+
+        function addZero(n) {
+        return (parseInt(n, 10) < 10 ? "0" : "") + n;
+        }
+
+        function setGreeting() {
+        let today = new Date();
+        let hour = today.getHours();
+
+        if (hour < 12) {
+            document.body.style.backgroundImage = 'url("https://raw.githubusercontent.com/Nehaadnekar/web-dev2020/master/images/morning.jpg")';
+            greeting.innerHTML = "Good Morning";
+        } else if (hour < 18) {
+            document.body.style.backgroundImage = 'url("https://raw.githubusercontent.com/Nehaadnekar/web-dev2020/master/images/afternoon.jpg")';
+            greeting.innerHTML = "Good Afternoon";
+        } else {
+            document.body.style.backgroundImage = 'url("https://raw.githubusercontent.com/Nehaadnekar/web-dev2020/master/images/night.jpg")';
+            greeting.innerHTML = "Good Evening";
+            document.body.style.color = "white";
+        }
+        }
+        function getName() {
+        if (localStorage.getItem("myData") == null) {
+            name.innerHTML = "[Enter Name]";
+        } else {
+            name.innerHTML = localStorage.getItem("myData");
+        }
+        }
+
+        function setName(e) {
+        if (e.type === "keypress") {
+            if (e.keyCode == 13) {
+            localStorage.setItem("myData", e.target.innerHTML);
+            name.blur();
+            }
+        } else {
+            localStorage.setItem("myData", e.target.innerHTML);
+            
+        }
+        }
+
+        getName();
+        showtime();
+        setGreeting();
+    </script>
+    
+</body>
+
+</html>
+
